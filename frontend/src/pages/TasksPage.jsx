@@ -24,21 +24,36 @@ export default function TasksPage() {
   const [deleteConfirm, setDeleteConfirm] = useState(null); // Task ID to delete
   const [currentPage, setCurrentPage] = useState(1); // Current page number
   const [itemsPerPage, setItemsPerPage] = useState(10); // Items per page
+  const [isInitialLoad, setIsInitialLoad] = useState(true); // Track first load
+  const [retryCount, setRetryCount] = useState(0); // Track retry attempts
 
   /**
-   * Fetch all tasks from the API
+   * Fetch all tasks from the API with retry logic
    */
   const fetchTasks = async () => {
     try {
       setLoading(true);
+      setError(""); // Clear any previous errors
       const res = await getTasks();
       setTasks(res.data);
-      setError("");
+      setIsInitialLoad(false);
+      setRetryCount(0); // Reset retry count on success
+      setLoading(false); // Set loading to false on success
     } catch (err) {
       console.error(err);
-      setError("Failed to load tasks");
-    } finally {
-      setLoading(false);
+
+      // For initial load, keep retrying
+      if (isInitialLoad) {
+        setRetryCount((prev) => prev + 1);
+        // Retry after 3 seconds
+        setTimeout(() => {
+          fetchTasks();
+        }, 3000);
+      } else {
+        // For subsequent operations, show error
+        setError("Failed to load tasks. Please try again.");
+        setLoading(false);
+      }
     }
   };
 
@@ -173,7 +188,8 @@ export default function TasksPage() {
             </button>
           </div>
 
-          {error && (
+          {/* Show error only for non-initial loads */}
+          {error && !loading && (
             <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg text-red-700">
               {error}
             </div>
@@ -181,8 +197,24 @@ export default function TasksPage() {
 
           {loading ? (
             <div className="text-center py-12">
-              <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
-              <p className="mt-2 text-gray-600">Loading tasks...</p>
+              <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900 mb-4"></div>
+              <p className="text-lg font-medium text-gray-900 mb-2">
+                {isInitialLoad
+                  ? "Loading data from server..."
+                  : "Loading tasks..."}
+              </p>
+              {isInitialLoad && (
+                <>
+                  <p className="text-sm text-gray-600 mb-2">
+                    This may take up to 50 seconds on first load. Please wait.
+                  </p>
+                  {retryCount > 0 && (
+                    <p className="text-xs text-gray-500">
+                      Retry attempt: {retryCount}
+                    </p>
+                  )}
+                </>
+              )}
             </div>
           ) : (
             <div className="pb-8">
