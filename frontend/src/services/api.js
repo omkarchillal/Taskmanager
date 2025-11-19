@@ -1,23 +1,24 @@
-/**
- * API Service Layer
- * Handles all HTTP requests to the backend API
- * Uses Axios for making API calls
- */
+
+//  API Service Layer
+//  Handles all HTTP requests to the backend API
+//  Uses Axios for making API calls
+
 
 import axios from "axios";
 
-/**
- * Create Axios instance with base configuration
- * Base URL points to the backend API server
- */
+
+//  Create Axios instance with base configuration
+//  Base URL points to the backend API server
+//  Uses environment variable if available, otherwise defaults to localhost
+
 const API = axios.create({
-    baseURL: "http://localhost:5000/api", // Backend API base URL
+    baseURL: import.meta.env.VITE_API_URL || "http://localhost:5000/api",
 });
 
-/**
- * Task API Functions
- * All functions return Axios promises
- */
+
+//  Task API Functions
+//  All functions return Axios promises
+
 
 // GET all tasks
 export const getTasks = () => API.get("/tasks");
