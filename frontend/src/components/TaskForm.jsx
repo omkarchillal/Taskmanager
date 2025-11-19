@@ -34,7 +34,7 @@ export default function TaskForm({ onSubmit, initialData, onCancel }) {
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-md border border-gray-200 p-6 sticky top-6">
+    <div className="p-6">
       <h2 className="text-2xl font-bold text-gray-900 mb-6">
         {initialData ? "Edit Task" : "Add New Task"}
       </h2>
@@ -82,27 +82,25 @@ export default function TaskForm({ onSubmit, initialData, onCancel }) {
             className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-gray-900 transition-colors bg-white"
           >
             <option value="pending">Pending</option>
+            <option value="in-progress">In Progress</option>
             <option value="completed">Completed</option>
           </select>
         </div>
 
         <div className="flex gap-3 pt-2">
           <button
+            type="button"
+            onClick={onCancel}
+            className="flex-1 px-4 py-2.5 border border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-50 transition-colors"
+          >
+            Cancel
+          </button>
+          <button
             type="submit"
             className="flex-1 py-2.5 bg-gray-900 text-white rounded-lg font-medium hover:bg-gray-700 transition-colors"
           >
             {initialData ? "Update Task" : "Create Task"}
           </button>
-
-          {initialData && (
-            <button
-              type="button"
-              onClick={onCancel}
-              className="px-6 py-2.5 border border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-50 transition-colors"
-            >
-              Cancel
-            </button>
-          )}
         </div>
       </form>
     </div>

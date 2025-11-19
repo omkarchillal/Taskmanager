@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Target } from "lucide-react";
 
 const LoginPage = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -19,7 +20,7 @@ const LoginPage = () => {
       <div className="w-full max-w-md p-8">
         <div className="text-center mb-8">
           <div className="inline-flex items-center gap-2 text-gray-900">
-            <div className="text-3xl">🎯</div>
+            <Target className="w-9 h-9" />
             <span className="text-3xl font-semibold">Tasker</span>
           </div>
         </div>

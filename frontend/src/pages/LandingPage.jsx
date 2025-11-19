@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { Target } from "lucide-react";
 
 const LandingPage = () => {
   const words = ["Track", "Manage", "Control"];
@@ -17,7 +18,7 @@ const LandingPage = () => {
     <div className="min-h-screen bg-white">
       <header className="flex justify-between items-center px-16 py-6">
         <div className="flex items-center gap-2">
-          <div className="text-2xl">🎯</div>
+          <Target className="w-7 h-7 text-gray-900" />
           <span className="text-2xl font-semibold text-gray-900">Tasker</span>
         </div>
         <nav className="hidden md:flex gap-10">
