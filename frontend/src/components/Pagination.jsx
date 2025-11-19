@@ -1,3 +1,14 @@
+/**
+ * Pagination Component
+ * Handles pagination controls and page navigation
+ * @param {Number} currentPage - Current active page
+ * @param {Number} totalPages - Total number of pages
+ * @param {Number} itemsPerPage - Number of items per page
+ * @param {Number} totalItems - Total number of items
+ * @param {Function} onPageChange - Callback when page changes
+ * @param {Function} onItemsPerPageChange - Callback when items per page changes
+ */
+
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export default function Pagination({

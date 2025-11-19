@@ -1,3 +1,10 @@
+/**
+ * DeleteConfirmModal Component
+ * Confirmation dialog for deleting tasks
+ * @param {Function} onConfirm - Callback when delete is confirmed
+ * @param {Function} onCancel - Callback when delete is cancelled
+ */
+
 export default function DeleteConfirmModal({ onConfirm, onCancel }) {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">

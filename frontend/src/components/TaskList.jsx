@@ -1,3 +1,11 @@
+/**
+ * TaskList Component
+ * Displays list of tasks or empty state
+ * @param {Array} tasks - Array of task objects to display
+ * @param {Function} onEdit - Callback when edit button is clicked
+ * @param {Function} onDelete - Callback when delete button is clicked
+ */
+
 import { ClipboardList } from "lucide-react";
 import TaskItem from "./TaskItem";
 

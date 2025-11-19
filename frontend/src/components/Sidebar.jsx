@@ -1,3 +1,11 @@
+/**
+ * Sidebar Component
+ * Navigation sidebar with task filters and counts
+ * @param {String} filterStatus - Current active filter
+ * @param {Function} setFilterStatus - Function to change filter
+ * @param {Object} taskCounts - Object containing count for each status
+ */
+
 import { Link } from "react-router-dom";
 import {
   Target,

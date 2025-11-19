@@ -1,3 +1,9 @@
+/**
+ * TasksPage Component
+ * Main page for task management
+ * Features: CRUD operations, filtering, pagination, modal dialogs
+ */
+
 import { useEffect, useState } from "react";
 import { Plus } from "lucide-react";
 import Sidebar from "../components/Sidebar";
@@ -8,16 +14,20 @@ import DeleteConfirmModal from "../components/DeleteConfirmModal";
 import { getTasks, createTask, updateTask, deleteTask } from "../services/api";
 
 export default function TasksPage() {
-  const [tasks, setTasks] = useState([]);
-  const [editingTask, setEditingTask] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [filterStatus, setFilterStatus] = useState("all");
-  const [deleteConfirm, setDeleteConfirm] = useState(null);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(10);
+  // State management
+  const [tasks, setTasks] = useState([]); // All tasks from database
+  const [editingTask, setEditingTask] = useState(null); // Task being edited
+  const [loading, setLoading] = useState(false); // Loading state
+  const [error, setError] = useState(""); // Error messages
+  const [isModalOpen, setIsModalOpen] = useState(false); // Modal visibility
+  const [filterStatus, setFilterStatus] = useState("all"); // Current filter
+  const [deleteConfirm, setDeleteConfirm] = useState(null); // Task ID to delete
+  const [currentPage, setCurrentPage] = useState(1); // Current page number
+  const [itemsPerPage, setItemsPerPage] = useState(10); // Items per page
 
+  /**
+   * Fetch all tasks from the API
+   */
   const fetchTasks = async () => {
     try {
       setLoading(true);
@@ -36,6 +46,10 @@ export default function TasksPage() {
     fetchTasks();
   }, []);
 
+  /**
+   * Handle creating a new task
+   * @param {Object} data - Task data (title, description, status)
+   */
   const handleCreate = async (data) => {
     try {
       await createTask(data);
@@ -47,6 +61,10 @@ export default function TasksPage() {
     }
   };
 
+  /**
+   * Handle updating an existing task
+   * @param {Object} data - Updated task data
+   */
   const handleUpdate = async (data) => {
     if (!editingTask) return;
     try {
@@ -60,6 +78,10 @@ export default function TasksPage() {
     }
   };
 
+  /**
+   * Handle deleting a task
+   * @param {String} id - Task ID to delete
+   */
   const handleDelete = async (id) => {
     try {
       await deleteTask(id);
@@ -81,11 +103,13 @@ export default function TasksPage() {
     setEditingTask(null);
   };
 
+  // Filter tasks based on selected status
   const filteredTasks = tasks.filter((task) => {
     if (filterStatus === "all") return true;
     return task.status === filterStatus;
   });
 
+  // Calculate task counts for each status
   const taskCounts = {
     all: tasks.length,
     pending: tasks.filter((t) => t.status === "pending").length,
@@ -93,13 +117,19 @@ export default function TasksPage() {
     completed: tasks.filter((t) => t.status === "completed").length,
   };
 
-  // Pagination calculations
+  /**
+   * Pagination calculations
+   * Calculate which tasks to display on current page
+   */
   const totalPages = Math.ceil(filteredTasks.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const paginatedTasks = filteredTasks.slice(startIndex, endIndex);
 
-  // Reset to page 1 when filter changes
+  /**
+   * Reset to page 1 when filter changes
+   * Prevents showing empty page if current page doesn't exist in new filter
+   */
   useEffect(() => {
     setCurrentPage(1);
   }, [filterStatus]);

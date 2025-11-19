@@ -27,6 +27,11 @@ export default function TaskItem({ task, onEdit, onDelete }) {
     }
   };
 
+  /**
+   * Get human-readable label for status
+   * @param {String} status - Task status
+   * @returns {String} Formatted status label
+   */
   const getStatusLabel = (status) => {
     switch (status) {
       case "in-progress":

@@ -1,3 +1,11 @@
+/**
+ * TaskForm Component
+ * Form for creating and editing tasks
+ * @param {Function} onSubmit - Callback when form is submitted
+ * @param {Object} initialData - Initial task data for editing (null for new task)
+ * @param {Function} onCancel - Callback when form is cancelled
+ */
+
 import { useState, useEffect } from "react";
 
 export default function TaskForm({ onSubmit, initialData, onCancel }) {
