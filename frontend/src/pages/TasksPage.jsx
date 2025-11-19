@@ -68,8 +68,8 @@ export default function TasksPage() {
   const handleCreate = async (data) => {
     try {
       await createTask(data);
-      await fetchTasks();
-      setIsModalOpen(false);
+      setIsModalOpen(false); // Close modal immediately
+      await fetchTasks(); // Then fetch updated tasks
     } catch (err) {
       console.error(err);
       setError("Failed to create task");
@@ -85,8 +85,8 @@ export default function TasksPage() {
     try {
       await updateTask(editingTask._id, data);
       setEditingTask(null);
-      setIsModalOpen(false);
-      await fetchTasks();
+      setIsModalOpen(false); // Close modal immediately
+      await fetchTasks(); // Then fetch updated tasks
     } catch (err) {
       console.error(err);
       setError("Failed to update task");
@@ -99,9 +99,9 @@ export default function TasksPage() {
    */
   const handleDelete = async (id) => {
     try {
+      setDeleteConfirm(null); // Close confirmation dialog immediately
       await deleteTask(id);
-      await fetchTasks();
-      setDeleteConfirm(null);
+      await fetchTasks(); // Then fetch updated tasks
     } catch (err) {
       console.error(err);
       setError("Failed to delete task");
