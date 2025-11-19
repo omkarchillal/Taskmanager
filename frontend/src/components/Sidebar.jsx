@@ -20,7 +20,7 @@ export default function Sidebar({ filterStatus, setFilterStatus, taskCounts }) {
   return (
     <aside className="w-64 bg-white border-r border-gray-200 flex flex-col">
       <div className="p-6 border-b border-gray-200">
-        <Link to="/" className="flex items-center gap-2">
+        <Link to="/tasks" className="flex items-center gap-2">
           <Target className="w-7 h-7 text-gray-900" />
           <span className="text-2xl font-semibold text-gray-900">Tasker</span>
         </Link>
