@@ -1,6 +1,18 @@
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 const LandingPage = () => {
+  const words = ["Track", "Manage", "Control"];
+  const [currentWordIndex, setCurrentWordIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentWordIndex((prevIndex) => (prevIndex + 1) % words.length);
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <div className="min-h-screen bg-white">
       <header className="flex justify-between items-center px-16 py-6">
@@ -55,14 +67,20 @@ const LandingPage = () => {
           <div>
             <h1 className="text-8xl font-bold leading-tight text-gray-900 mb-8">
               Take Control Of Your Tasks
-              <span className="inline-block relative mx-4">
-                <img
-                  src="/schedule-preview.png"
-                  alt="My schedule"
-                  className="w-52 rounded-xl shadow-lg align-middle"
-                />
+              <span className="block text-gray-300 mt-2 h-[1.2em] overflow-hidden relative">
+                <span
+                  className="absolute w-full transition-transform duration-700 ease-in-out"
+                  style={{
+                    transform: `translateY(-${currentWordIndex * 35}%)`,
+                  }}
+                >
+                  {words.map((word, index) => (
+                    <span key={index} className="block h-[1.5em]">
+                      {word}
+                    </span>
+                  ))}
+                </span>
               </span>
-              <span className="block text-gray-300 mt-2">Manage</span>
             </h1>
             <p className="text-xl text-gray-600 leading-relaxed">
               Tasker platform helps you stay on top of your tasks
@@ -72,13 +90,7 @@ const LandingPage = () => {
           </div>
         </section>
 
-        <section className="mt-16 p-12 bg-gradient-to-b from-gray-200 to-gray-300 rounded-3xl flex justify-center items-center">
-          <img
-            src="/dashboard-preview.png"
-            alt="Tasker Dashboard"
-            className="w-full max-w-4xl rounded-xl shadow-2xl"
-          />
-        </section>
+        {/* <section className="mt-16 p-12 bg-gradient-to-b from-gray-200 to-gray-300 rounded-3xl flex justify-center items-center"></section> */}
       </main>
     </div>
   );
